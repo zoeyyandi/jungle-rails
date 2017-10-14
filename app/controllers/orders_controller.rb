@@ -7,8 +7,10 @@ class OrdersController < ApplicationController
   def create
     charge = perform_stripe_charge
     order  = create_order(charge)
+    user = User.find_by(id: session[:user_id])
 
     if order.valid?
+      UserMailer.email(user, order).deliver_now
       empty_cart!
       redirect_to order, notice: 'Your Order has been placed.'
     else

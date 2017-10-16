@@ -22,10 +22,24 @@
           <dd><%= @product.quantity %></dd>
           <dt>Price</dt>
           <dd><%= @product.price %></dd>
+          <dt>Rating</dt>
+          <dd><%= render 'rating', {rating: @product.reviews.average(:rating).to_i} %></dd>
         </dl>
       </div>
     </div>
 
   </article>
+  <% if current_user %>
+  <%= render 'review_form' %>
+  <% end %>
+  
+  <div class="row reviews">
+  <% if @product.reviews.length > 0 %>
+    <strong>Reviews:</strong>
+    <% @product.reviews.reverse.each do |review| %>
+      <%= render 'review', review: review %>
+    <% end %>
+  <% end %>
+</div>
 
 </section>

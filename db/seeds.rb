@@ -29,13 +29,34 @@ cat1 = Category.find_or_create_by! name: 'Apparel'
 cat2 = Category.find_or_create_by! name: 'Electronics'
 cat3 = Category.find_or_create_by! name: 'Furniture'
 
+## USERS 
+
+puts "Re-creating User ..."
+
+User.destroy_all
+
+user1 = User.create({
+  first_name: "Zoey",
+  last_name: "Z",
+  email: "z@z.com",
+  password: "1"
+})
+
+user2 = User.create({
+  first_name: "Ian",
+  last_name: "K",
+  email: "i@i.com",
+  password: "2"
+})
+
+
 ## PRODUCTS
 
 puts "Re-creating Products ..."
 
 Product.destroy_all
 
-cat1.products.create!({
+prd1 = cat1.products.create!({
   name:  'Men\'s Classy shirt',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('apparel1.jpg'),
@@ -43,7 +64,7 @@ cat1.products.create!({
   price: 64.99
 })
 
-cat1.products.create!({
+prd2 = cat1.products.create!({
   name:  'Women\'s Zebra pants',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('apparel2.jpg'),
@@ -51,7 +72,7 @@ cat1.products.create!({
   price: 124.99
 })
 
-cat1.products.create!({
+prd3 = cat1.products.create!({
   name:  'Hipster Hat',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('apparel3.jpg'),
@@ -131,6 +152,55 @@ cat3.products.create!({
   quantity: 23,
   price: 2_483.75
 })
+
+## REVIEWS 
+
+puts "Re-creating Reviews ..."
+
+Review.destroy_all
+
+Review.create!({
+  product_id: prd1.id,
+  user_id: user1.id,
+  description: "Not the greatest",
+  rating: 1
+})
+
+Review.create!({
+  product_id: prd2.id,
+  user_id: user1.id,
+  description: "Fairly good product",
+  rating: 2
+})
+
+Review.create!({
+  product_id: prd3.id,
+  user_id: user1.id,
+  description: "Ok product",
+  rating: 2
+})
+
+Review.create!({
+  product_id: prd1.id,
+  user_id: user2.id,
+  description: "Pretty cool",
+  rating: 3
+})
+
+Review.create!({
+  product_id: prd2.id,
+  user_id: user2.id,
+  description: "Good",
+  rating: 4
+})
+
+Review.create!({
+  product_id: prd3.id,
+  user_id: user2.id,
+  description: "This is awesome",
+  rating: 5
+})
+
 
 
 puts "DONE!"
